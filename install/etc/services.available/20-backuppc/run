@@ -8,12 +8,12 @@ PROCESS_NAME="backuppc"
 check_container_initialized
 check_service_initialized 11-fcgiwrap
 
-if [ ! -e /etc/msmtprc ] ; then
-    mkdir -p /etc/msmtprc
+if [ ${ENABLE_SMTP} == 'TRUE' ] ; then
+    # mkdir -p /etc/msmtprc
+    cp -R /etc/msmtprc /home/backuppc/.msmtprc
 fi
 
-cp -R /etc/msmtprc /home/backuppc/.msmtprc
 liftoff
 
-print_info "Starting BackupPC ${BACKUPPC_VERSION}"
-silent exec s6-setuidgid backuppc /usr/local/BackupPC/bin/BackupPC
+print_info "Starting BackupPC ${BACKUPPC_VERSION} - not-silent"
+exec s6-setuidgid backuppc /usr/local/BackupPC/bin/BackupPC
