@@ -1,0 +1,29 @@
+  name: Build and push Docker images
+  uses: docker/build-push-action@v1.1.0
+  with:
+    # Username used to log in to a Docker registry. If not set then no login will occur
+    username: sunnybear
+    # Password or personal access token used to log in to a Docker registry. If not set then no login will occur
+    password: 2b8374f4-4b86-4621-a9e3-7b42a9ae8277
+    # Server address of Docker registry. If not set then will default to Docker Hub
+    # registry: # optional
+    # Docker repository to tag the image with
+    repository: sunnybear/backuppc
+    # Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags
+    tags: latest
+    # Path to the build context
+    # path: # optional, default is .
+    # Path to the Dockerfile (Default is '{path}/Dockerfile')
+    # dockerfile: # optional
+    # Always attempt to pull a newer version of the image
+    # always_pull: true
+    # Comma-delimited list of build-time variables
+    # build_args: # optional
+    # Comma-delimited list of images to consider as cache sources
+    # cache_froms: tiredofit/nginx:alpine-3.12, backuppc/backuppc-xs, ackuppc/rsync-bpc, Parchive/par2cmdline, backuppc/backuppc
+    # Comma-delimited list of labels to add to the built image
+    # labels: # optional
+    # Adds labels with git repository information to the built image
+    # add_git_labels: # optional
+    # Whether to push the image
+    # push: true
