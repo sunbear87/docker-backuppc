@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bash
+
+source /assets/functions/00-container
+prepare_service defaults single
+
+PROCESS_NAME="backuppc"
+
+check_container_initialized
+check_service_initialized 11-fcgiwrap
+
+if [ ! -e /etc/msmtprc ] ; then
+    mkdir -p /etc/msmtprc
+fi
+
+cp -R /etc/msmtprc /home/backuppc/.msmtprc
+liftoff
+
+print_info "Starting BackupPC ${BACKUPPC_VERSION}"
+silent exec s6-setuidgid backuppc /usr/local/BackupPC/bin/BackupPC

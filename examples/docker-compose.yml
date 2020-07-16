@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+
+  backuppc-app:
+    image: tiredofit/backuppc
+    container_name: backuppc-app
+    labels:
+      - traefik.enable=true
+      - traefik.frontend.rule=Host:backuppc.example.com
+      - traefik.port=80
+      - traefik.protocol=http
+      - traefik.docker.network=proxy
+      - traefik.backend=backuppc-app
+    volumes:
+      - ./data:/var/lib/backuppc
+      - ./conf/etc/:/etc/backuppc
+      - ./conf/home/:/home/backuppc
+      - ./logs:/www/logs
+    environment:
+      - ZABBIX_HOSTNAME=backuppc-app
+      - BACKUPPC_UUID=10000
+      - BACKUPPC_GUID=10000
+      
+      - NGINX_AUTHENTICATION_TYPE=BASIC
+      - NGINX_AUTHENTICATION_BASIC_USER1=backuppc
+      - NGINX_AUTHENTICATION_BASIC_PASS1=backuppc
+      - DEBUG_MODE=TRUE
+    networks:
+      - proxy
+      - services
+    restart: always
+
+networks:
+  proxy:
+    external: true
+  services:
+    external: true
